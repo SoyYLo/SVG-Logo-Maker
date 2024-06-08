@@ -1,21 +1,24 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const {Circle, Triangle, Square} = require('./lib/shapes');
+const { Circle, Triangle, Square } = require('./lib/shapes');
 const colors = require('colors');
 
-class SVG{
-    constructor(){
-        this.textElement = ''
-        this.shapeElement = ''
+class SVG {
+    constructor() {
+        this.textElement = '';
+        this.shapeElement = '';
     }
-    render(){
-        return `<svg width="350" height="60" xmlns="http://www.w3.org/2000/svg">`
+    render() {
+        return `<svg width="350" height="60" xmlns="http://www.w3.org/2000/svg">
+        ${this.textElement}
+        ${this.shapeElement}
+        </svg>`;
     }
-    setTextEl(text){
-        this.textElement =  `<text x="150" y="125" font-size="60" text-anchor="middle" fill="black">`
+    setTextEl(text) {
+        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="black">${text}</text>`;
     }
-    setShapeEl(shape){
-        this.shapeElement = shape.render()
+    setShapeEl(shape) {
+        this.shapeElement = shape.render();
     }
 }
 
@@ -29,7 +32,12 @@ const questions = [
     {
         type: "input",
         name: "text-color",
-        messgae: "Choose you color. Enter a color keyword or a hexadecimal number:",
+        message: "Choose your text color. Enter a color keyword or a hexadecimal number:",
+    },
+    {
+        type: "input",
+        name: "shape-color",
+        message: "Choose your shape color. Enter a color keyword or a hexadecimal number:",
     },
     {
         type: "list",
@@ -41,8 +49,7 @@ const questions = [
 
 // write data to file
 function writeToFile(fileName, data) {
-    console.log("Writing [" + data + "] to file [" + fileName + "]")
-    filesystem.writeFile(fileName, data, function (err) {
+    fs.writeFile(fileName, data, function (err) {
         if (err) {
             return console.log(err);
         }
@@ -52,20 +59,35 @@ function writeToFile(fileName, data) {
 
 // Create function to initialize app
 async function init() {
-    const svgString = "";
+    const svg = new SVG();
     const svgFile = "logo.svg";
 
     // prompt user for character answer
     const answers = await inquirer.prompt(questions);
     //user text input
-    let userText = "";
-    if (answers.text.length > 0 && answers.text.length <4) {
+    if (answers.text.length > 0 && answers.text.length < 4) {
         // 1-3 characters
-        userText = answers.text;
+        svg.setTextEl(answers.text);
     } else {
         console.log("Please enter 1-3 characters.");
         return;
     }
+    switch (answers.shape) {
+        case "Circle":
+            svg.setShapeEl(new Circle());
+            break;
+        case "Square":
+            svg.setShapeEl(new Square());
+            break;
+        case "Triangle":
+            svg.setShapeEl(new Triangle());
+            break;
+        default:
+            console.log("invalid shape choice.");
+            return;
+    }
+    const svgString = svg.render();
+    writeToFile(svgFile, svgString);
 }
 
 // Function call to initialize app
