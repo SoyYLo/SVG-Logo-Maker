@@ -38,3 +38,35 @@ const questions = [
         choices: ["Circle", "Square", "Triangle"],
     },
 ];
+
+// write data to file
+function writeToFile(fileName, data) {
+    console.log("Writing [" + data + "] to file [" + fileName + "]")
+    filesystem.writeFile(fileName, data, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log("Your logo.svg has been generated!");
+    });
+}
+
+// Create function to initialize app
+function init() {
+    const svgString = "";
+    const svgFile = "logo.svg";
+
+    // prompt user for character answer
+    const answers = inquirer.prompt(questions);
+    //user text input
+    const userText = "";
+    if (answers.text.length > 0 && answers.text.length <4) {
+        // 1-3 characters
+        userText = answers.text;
+    } else {
+        console.log("Please enter 1-3 characters.");
+        return;
+    }
+}
+
+// Function call to initialize app
+init();
