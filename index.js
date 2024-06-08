@@ -58,7 +58,7 @@ async function init() {
     // prompt user for character answer
     const answers = await inquirer.prompt(questions);
     //user text input
-    const userText = "";
+    let userText = "";
     if (answers.text.length > 0 && answers.text.length <4) {
         // 1-3 characters
         userText = answers.text;
