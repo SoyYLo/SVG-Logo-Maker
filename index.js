@@ -51,12 +51,12 @@ function writeToFile(fileName, data) {
 }
 
 // Create function to initialize app
-function init() {
+async function init() {
     const svgString = "";
     const svgFile = "logo.svg";
 
     // prompt user for character answer
-    const answers = inquirer.prompt(questions);
+    const answers = await inquirer.prompt(questions);
     //user text input
     const userText = "";
     if (answers.text.length > 0 && answers.text.length <4) {
