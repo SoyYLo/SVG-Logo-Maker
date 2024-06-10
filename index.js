@@ -9,13 +9,13 @@ class SVG {
         this.shapeElement = '';
     }
     render() {
-        return `<svg width="350" height="60" xmlns="http://www.w3.org/2000/svg">
+        return `<svg width="350" height="350" xmlns="http://www.w3.org/2000/svg">
         ${this.textElement}
         ${this.shapeElement}
         </svg>`;
     }
-    setTextEl(text) {
-        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="black">${text}</text>`;
+    setTextEl(text, colors) {
+        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${colors}">${text}</text>`;
     }
     setShapeEl(shape) {
         this.shapeElement = shape.render();
@@ -31,12 +31,12 @@ const questions = [
     },
     {
         type: "input",
-        name: "text-color",
+        name: "textColor",
         message: "Choose your text color. Enter a color keyword or a hexadecimal number:",
     },
     {
         type: "input",
-        name: "shape-color",
+        name: "shapeColor",
         message: "Choose your shape color. Enter a color keyword or a hexadecimal number:",
     },
     {
