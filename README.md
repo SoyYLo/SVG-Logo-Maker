@@ -30,6 +30,10 @@ https://www.digitalocean.com/community/tutorials/nodejs-interactive-command-line
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#inheritance
 
+https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes
+
+https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial
+
 ## Demo Link
 
 https://drive.google.com/file/d/1i5tHhAHT7NvBIKnF_ZVh_uYozxJKaGkq/view?usp=sharing
