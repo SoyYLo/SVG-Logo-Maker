@@ -1,7 +1,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const { Circle, Triangle, Square } = require('./lib/shapes');
-const colors = require('colors');
+
 
 class SVG {
     constructor() {
@@ -10,12 +10,12 @@ class SVG {
     }
     render() {
         return `<svg width="350" height="350" xmlns="http://www.w3.org/2000/svg">
-        ${this.textElement}
         ${this.shapeElement}
+        ${this.textElement}
         </svg>`;
     }
-    setTextEl(text, colors) {
-        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${colors}">${text}</text>`;
+    setTextEl(text, color) {
+        this.textElement = `<text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`;
     }
     setShapeEl(shape) {
         this.shapeElement = shape.render();
@@ -64,23 +64,31 @@ async function init() {
 
     // prompt user for character answer
     const answers = await inquirer.prompt(questions);
+    console.log(answers);
     //user text input
     if (answers.text.length > 0 && answers.text.length < 4) {
         // 1-3 characters
-        svg.setTextEl(answers.text);
+        svg.setTextEl(answers.text, answers.textColor);
+    
     } else {
         console.log("Please enter 1-3 characters.");
         return;
     }
     switch (answers.shape) {
         case "Circle":
-            svg.setShapeEl(new Circle());
+            const circle = new Circle();
+            circle.setColor(answers.shapeColor);
+            svg.setShapeEl(circle);
             break;
         case "Square":
-            svg.setShapeEl(new Square());
+            const square = new Square();
+            square.setColor(answers.shapeColor);
+            svg.setShapeEl(square);
             break;
         case "Triangle":
-            svg.setShapeEl(new Triangle());
+            const triangle = new Triangle();
+            triangle.setColor(answers.shapeColor);
+            svg.setShapeEl(triangle);
             break;
         default:
             console.log("invalid shape choice.");
